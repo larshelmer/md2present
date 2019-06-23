@@ -4,6 +4,7 @@
 *.dll
 *.so
 *.dylib
+/md2present
 
 # Test binary, build with `go test -c`
 *.test
