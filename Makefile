@@ -21,3 +21,4 @@ clean:
 lint:
 	@gofmt -s -w $(GOFILES)
 	@goimports -w $(GOFILES)
+	@golangci-lint run --enable-all

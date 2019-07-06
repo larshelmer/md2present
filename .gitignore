@@ -5,6 +5,10 @@
 *.so
 *.dylib
 /md2present
+__debug_bin
+
+# IDE specific
+debug.json
 
 # Test binary, build with `go test -c`
 *.test

@@ -1,7 +1,7 @@
 package report
 
 import (
-	"errors"
+	// "errors"
 	"fmt"
 	"io/ioutil"
 
@@ -15,12 +15,12 @@ func Generate(filename string) error {
 		return err
 	}
 
-	root := parseMarkdown(file)
-	if _, ok := root.(*ast.Document); ok {
-		fmt.Println("found the root")
-	} else {
-		return errors.New("not gonna happen")
-	}
+	parseMarkdown(file)
+	// if _, ok := root.(*ast.Document); ok {
+	// 	fmt.Println("found the root")
+	// } else {
+	// 	return errors.New("not gonna happen")
+	// }
 
 	return nil
 }
@@ -29,7 +29,44 @@ func readFile(filename string) ([]byte, error) {
 	return ioutil.ReadFile(filename)
 }
 
-func parseMarkdown(data []byte) ast.Node {
-	p := parser.New()
-	return p.Parse(data)
+func parseMarkdown(data []byte) {
+	renderer := NewRenderer()
+	extensions := parser.CommonExtensions | parser.Mmark
+	parser := parser.NewWithExtensions(extensions)
+	md := parser.Parse(data)
+	ast.WalkFunc(md, renderer.RenderNode)
+}
+
+type Renderer struct {
+	doc *Doc
+}
+
+func NewRenderer() *Renderer {
+	return &Renderer{new(Doc)}
+}
+
+func (r *Renderer) RenderNode(node ast.Node, entering bool) ast.WalkStatus {
+	switch node := node.(type) {
+	case *ast.Document:
+		// do nothing
+	case *ast.Paragraph:
+		// do nothing
+	case *ast.Text:
+		r.text(node)
+	case *ast.Heading:
+		r.heading(node, entering)
+	default:
+		fmt.Println(fmt.Sprintf("Not implemented %T", node))
+	}
+	return ast.GoToNext
+}
+
+func (r *Renderer) text(node *ast.Text) {
+	fmt.Println("text ", string(node.Literal))
+}
+
+func (r *Renderer) heading(node *ast.Heading, entering bool) {
+	if entering {
+		fmt.Println("heading ", string(node.Literal))
+	}
 }
