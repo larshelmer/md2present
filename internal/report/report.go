@@ -45,6 +45,8 @@ func NewRenderer() *Renderer {
 	return &Renderer{new(Doc)}
 }
 
+// headings, bulleted lists, text, preformatted text, image, background image
+// iframe(?), link, html(?), caption (figurecaption), video
 func (r *Renderer) RenderNode(node ast.Node, entering bool) ast.WalkStatus {
 	switch node := node.(type) {
 	case *ast.Document:
@@ -55,6 +57,8 @@ func (r *Renderer) RenderNode(node ast.Node, entering bool) ast.WalkStatus {
 		r.text(node)
 	case *ast.Heading:
 		r.heading(node, entering)
+	case *ast.HorizontalRule:
+		// new section
 	default:
 		fmt.Println(fmt.Sprintf("Not implemented %T", node))
 	}
