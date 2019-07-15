@@ -60,8 +60,8 @@ require (
 	golang.org/x/image v0.0.0-20190622003408-7e034cad6442 // indirect
 	golang.org/x/mobile v0.0.0-20190607214518-6fa95d984e88 // indirect
 	golang.org/x/mod v0.1.0 // indirect
-	golang.org/x/net v0.0.0-20190620200207-3b0461eec859 // indirect
 	golang.org/x/sys v0.0.0-20190621203818-d432491b9138 // indirect
+	golang.org/x/tools v0.0.0-20190715172921-9e48ab1d90cd // indirect
 	google.golang.org/appengine v1.6.1 // indirect
 	google.golang.org/genproto v0.0.0-20190620144150-6af8c5fc6601 // indirect
 	google.golang.org/grpc v1.21.1 // indirect
